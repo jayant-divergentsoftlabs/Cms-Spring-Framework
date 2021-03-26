@@ -1,4 +1,4 @@
-package com.divergentsl.clinicmanagementsystem;
+package com.divergentsl.clinicmanagementsystem.databaseconnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

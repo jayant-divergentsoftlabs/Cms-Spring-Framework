@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.divergentsl.clinicmanagementsystem.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 
 public class DoctorDao {
@@ -17,12 +17,13 @@ public class DoctorDao {
 		this.DatabaseManager = Databasemanager;
 	}
 
-	public void create(String id, String name, String speciality, String fee) throws SQLException {
+	public int create(String id, String name, String speciality, String fee) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		stmt.executeUpdate("insert into doctor values (" + id + ", '" + name + "','" + speciality + "'," + fee + ")");
+		return stmt.executeUpdate(
+				"insert into doctor values (" + id + ", '" + name + "','" + speciality + "'," + fee + ")");
 
 	}
 
@@ -45,27 +46,25 @@ public class DoctorDao {
 
 	}
 
-	public void update(String id, String name, String speciality, String fee) throws SQLException {
+	public int update(String id, String name, String speciality, String fee) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		String updateQuery = "UPDATE doctor SET D_name ='" + name + "', D_Speciality='" + speciality + "', D_fee='" + fee + "' WHERE D_id='" + id + "'";
+		String updateQuery = "UPDATE doctor SET D_name ='" + name + "', D_Speciality='" + speciality + "', D_fee='"
+				+ fee + "' WHERE D_id='" + id + "'";
 		System.out.println(updateQuery);
-		stmt.executeUpdate(updateQuery);
+		return stmt.executeUpdate(updateQuery);
 
 	}
 
-	public void delete(String id) throws SQLException {
+	public int delete(String id) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		stmt.executeUpdate("DELETE FROM doctor WHERE D_id='" + id + "'");
+		return stmt.executeUpdate("DELETE FROM doctor WHERE D_id='" + id + "'");
 
 	}
 
-	
-	}
-
-
+}

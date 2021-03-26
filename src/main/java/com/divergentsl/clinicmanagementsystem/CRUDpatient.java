@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
-
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 /**

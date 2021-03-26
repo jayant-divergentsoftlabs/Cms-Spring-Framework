@@ -39,8 +39,8 @@ public class PatientDto {
 	public Reader getGender() {
 		return gender;
 	}
-	public void setGender(Reader reader) {
-		this.gender = reader;
+	public void setGender(Reader gender) {
+		this.gender = gender;
 	}
 	
 }

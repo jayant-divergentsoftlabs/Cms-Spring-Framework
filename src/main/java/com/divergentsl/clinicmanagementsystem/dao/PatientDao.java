@@ -7,8 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.divergentsl.clinicmanagementsystem.IDatabaseManager;
-
+import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 public class PatientDao {
@@ -18,13 +17,13 @@ public class PatientDao {
 		this.DatabaseManager = Databasemanager;
 	}
 
-	public void create(String id, String name, int age, char gender, String contactnumber, int weight)
+	public int create(String id, String name, int age, char gender, String contactnumber, int weight)
 			throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		stmt.executeUpdate("insert into patient values ( '" + id + "' , '" + name + "' , " + age + " , '" + gender
+		return stmt.executeUpdate("insert into patient values ( '" + id + "' , '" + name + "' , " + age + " , '" + gender
 				+ "' , '" + contactnumber + "' , " + weight + " )");
 
 	}
@@ -50,7 +49,7 @@ public class PatientDao {
 
 	}
 
-	public void update(String id, String name, int age, char gender, String contactnumber, int weight)
+	public int update(String id, String name, int age, char gender, String contactnumber, int weight)
 			throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
@@ -59,15 +58,15 @@ public class PatientDao {
 		String updateQuery = "UPDATE patient SET P_name  ='" + name + "', P_age= " + age + ", P_Gender= '" + gender
 				+ "', P_contactnumber ='" + contactnumber + "', P_weight =" + weight + " WHERE P_id='" + id + "'";
 		System.out.println(updateQuery);
-		stmt.executeUpdate(updateQuery);
+		return stmt.executeUpdate(updateQuery);
 	}
 
-	public void delete(String id) throws SQLException {
+	public int delete(String id) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		stmt.executeUpdate("DELETE FROM patient WHERE P_id='" + id + "'");
+		return stmt.executeUpdate("DELETE FROM patient WHERE P_id='" + id + "'");
 
 	}
 

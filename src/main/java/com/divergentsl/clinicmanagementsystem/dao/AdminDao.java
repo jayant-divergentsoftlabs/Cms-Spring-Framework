@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.divergentsl.clinicmanagementsystem.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 
 public class AdminDao {
 	IDatabaseManager databaseManager;
@@ -32,11 +32,9 @@ public class AdminDao {
 					System.out.println("Try again..!!");
 					return false;
 				}
-			} else {
-				System.out.println("Connection error..!!");
-				return false;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			
 			e.printStackTrace();
 		}

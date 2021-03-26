@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 
 /**
@@ -21,7 +22,7 @@ public class CRUDdoctor {
 	 * This method i.e. CRUDdr is accessible by admin where admin can operate CRUD
 	 * on doctor.
 	 */
-	public void CRUDdr() {
+	public static void CRUDdr() {
 
 		while (true) {
 

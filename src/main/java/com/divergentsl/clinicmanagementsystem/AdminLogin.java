@@ -3,6 +3,7 @@ package com.divergentsl.clinicmanagementsystem;
 import java.util.*;
 
 import com.divergentsl.clinicmanagementsystem.dao.AdminDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
 /**
  * This class is for admin,only admin accessor can access it by admin's username

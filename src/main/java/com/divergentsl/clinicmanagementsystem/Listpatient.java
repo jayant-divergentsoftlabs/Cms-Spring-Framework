@@ -10,12 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 public class Listpatient {
-	/**
-	 * 
-	 */
 
 	public static void listPatient() {
 		System.out.println(
@@ -24,7 +22,7 @@ public class Listpatient {
 		try {
 			PatientDao patient = new PatientDao(new DatabaseManager());
 			List<PatientDto> dtos = patient.read();
-			System.out.printf("id          name \t        age      gender\t  contactnumber\t  weight\n");
+			//System.out.printf("id          name \t        age      gender\t  contactnumber\t  weight\n");
 
 			for (PatientDto patientDto : dtos) {
 				System.out.printf(" %s %30s %15s  %20s %20s %20d ", patientDto.getId(), patientDto.getName(),

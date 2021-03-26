@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.divergentsl.clinicmanagementsystem.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 public class ListpatientDao {
@@ -34,7 +34,7 @@ public class ListpatientDao {
 			patientDto.getWeight();
 			patientDtos.add(patientDto);
 		}
-		return patientDtos;
+		return patientDtos; 
 
 	}
 

@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import com.divergentsl.clinicmanagementsystem.dao.AppointmentDao;
 import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 
 /**

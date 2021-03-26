@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import com.divergentsl.clinicmanagementsystem.dao.LabtestDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.LabtestDto;
 
 /**
@@ -90,14 +91,14 @@ public class CRUDLabtest {
 	}
 
 	public static void update() {
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in); 
 
 		System.out.println("Enter Test ID of test  you want to edit");
-		String id = sc.next();
+		int id = sc.nextInt();
 		System.out.println("Enter a name you want to update");
 		String name = sc.next();
 		System.out.println("Enter a price you want to update");
-		String price = sc.next();
+		int price = sc.nextInt();
 
 		try {
 			LabtestDao labtest = new LabtestDao(new DatabaseManager());

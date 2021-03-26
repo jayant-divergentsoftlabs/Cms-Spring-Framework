@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
 import com.divergentsl.clinicmanagementsystem.dao.PrescriptionDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
 public class Prescription {
 
@@ -21,15 +22,15 @@ public class Prescription {
 			System.out.println("Enter Drug Name");
 			String name = sc.nextLine();
 			System.out.println("Enter Drug MG");
-			String mg = sc.nextLine();
+			int mg = sc.nextInt();
 			System.out.println("Enter Drug Quantity");
-			String quantity = sc.nextLine();
+			int quantity = sc.nextInt();
 			System.out.println("Enter Drug Days");
-			String days = sc.nextLine();
+			int days = sc.nextInt();
 			System.out.println("Enter Lab test");
-			String test = sc.nextLine();
+			String test = sc.next();
 			System.out.println("Enter the Note");
-			String notes=sc.nextLine();
+			String notes=sc.next();
 			PrescriptionDao prescription = new PrescriptionDao(new DatabaseManager());
 			try {
 				prescription.create(name, mg,quantity,days,test,notes);

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.divergentsl.clinicmanagementsystem.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 
 public class PrescriptionDao {
 	IDatabaseManager DatabaseManager;
@@ -12,14 +12,16 @@ public class PrescriptionDao {
 	public PrescriptionDao(IDatabaseManager Databasemanager) {
 		this.DatabaseManager = Databasemanager;
 	}
-	public void create(String name, String mg, String quantity, String days, String test,String notes)
+	public int create(String name, int mg, int quantity, int days, String test,String notes)
 			throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		stmt.executeUpdate( "INSERT INTO prescription values('" + name + "','" + mg+ "','" + quantity+ "','" + days+ "','" + test+ "','" + notes + "')");
+		return stmt.executeUpdate( "INSERT INTO prescription values('" + name + "','" + mg+ "','" + quantity+ "','" + days+ "','" + test+ "','" + notes + "')");
 		
 
 }
+	
+	
 }

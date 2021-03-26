@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
 import com.divergentsl.clinicmanagementsystem.dao.DoctorloginDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
 /**
  * This class is for Doctors,only doctor who have a doctor access can access it
@@ -27,10 +28,10 @@ public class DoctorLogin {
 
 			System.out.println("\n-----Doctor Login------");
 			System.out.print("\nEnter Username: ");
-			String username = sc.nextLine();
+			String username = sc.next();
 
 			System.out.print("\nEnter Password: ");
-			String password = sc.nextLine();
+			String password = sc.next();
 			DoctorloginDao doctorDao=new DoctorloginDao(new DatabaseManager());
 			return doctorDao.doctorDao(username,password);
 		}
@@ -71,7 +72,7 @@ public class DoctorLogin {
 //			Prescription.prescription();
 			break;
 		case 5:
-			ClinicManagementSystem.main(null);
+			CRUDdoctor.CRUDdr();
 			System.out.println("------------------Exit Successfully-----------------------");
 			break;
 

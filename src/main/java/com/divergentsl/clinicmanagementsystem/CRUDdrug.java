@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import com.divergentsl.clinicmanagementsystem.dao.DrugDao;
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
+import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DrugDto;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
@@ -35,23 +36,23 @@ public class CRUDdrug {
 			switch (input) {
 			case 1:
 				create();
-				
+
 				break;
 			case 2:
 				read();
-				
+
 				break;
 			case 3:
 				update();
-				
+
 				break;
 			case 4:
 				delete();
-				
+
 				break;
 			case 5:
 				AdminLogin.adminpanel();
-				
+
 				break;
 			default:
 				System.out.println("-------------------Enter Valid Input--------------------");
@@ -108,15 +109,15 @@ public class CRUDdrug {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter Drug ID  you want to edit");
-		String id = sc.next();
+		int id = sc.nextInt();
 		System.out.println("Enter a name you want to update");
 		String name = sc.next();
 		System.out.println("Enter a Quantity you want to update");
-		String quantity = sc.next();
+		int quantity = sc.nextInt();
 		System.out.println("Enter a description you want to update");
 		String description = sc.next();
 		System.out.println("Enter a price you want to update");
-		String price = sc.next();
+		int price = sc.nextInt();
 
 		try {
 			DrugDao drug = new DrugDao(new DatabaseManager());
