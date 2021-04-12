@@ -4,10 +4,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 
 public class DoctorloginDao {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/AdminDao.java");
+	
 	IDatabaseManager databaseManager;
 
 	public DoctorloginDao(IDatabaseManager databaseManager) {
@@ -16,6 +21,7 @@ public class DoctorloginDao {
 
 	public boolean doctorDao(String username, String password) {
 		try {
+			myLogger.setLevel(Level.FINE);
 			Connection con = null;
 			Statement stmt = null;
 			ResultSet rs = null;
@@ -25,14 +31,14 @@ public class DoctorloginDao {
 
 				rs=stmt.executeQuery("select *from doctorlogin where D_username ='" + username + "' and D_password ='" + password + "'");
 				if (rs.next()) {
-					System.out.println("Password is correct..!!");
-					System.out.println("-----Doctor Login Successful-----");
+					myLogger.info("Password is correct..!!");
+					myLogger.info("-----Doctor Login Successful-----");
 					return true;
 				} else {
-					System.out.println("Try again..!!");
+					myLogger.info("Try again..!!");
 				}
 			} else {
-				System.out.println("Connection error..!!");
+				myLogger.info("Connection error..!!");
 			}
 		} catch (SQLException e) {
 			

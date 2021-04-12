@@ -2,6 +2,8 @@ package com.divergentsl.clinicmanagementsystem;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.LabtestDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
@@ -15,14 +17,17 @@ import com.divergentsl.clinicmanagementsystem.dto.LabtestDto;
  *
  */
 public class CRUDLabtest {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDLabTest.java");
 	/**
 	 * This method i.e. CRUDtest is accessible by admin where admin can operate CRUD
 	 * on test which are in Lab.
 	 */
 	public static void CRUDLab() {
+		myLogger.setLevel(Level.FINE);
 		Scanner sc = new Scanner(System.in);
 		while (true) {
-			System.out.println("--------CRUD LabTest--------");
+			myLogger.info("--------CRUD LabTest--------");
 			System.out.println("Press:- " + "\n1.Create Test" + "\n2.See Test list" + "\n3.Edit Test"
 					+ "\n4.Delete Test" + "\n5.EXIT");
 			int input = sc.nextInt();
@@ -63,15 +68,15 @@ public class CRUDLabtest {
 		LabtestDao labtest = new LabtestDao(new DatabaseManager());
 		try {
 			labtest.create(id, name, price);
-			System.out.println("\n-------Insertion is Successful-------");
+			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("\n--------Unsuccesful ----------");
+			myLogger.info("\n--------Unsuccesful ----------");
 		}
 	}
 
 	public static void read() {
-		System.out.println(
+		myLogger.info(
 				"--------------------------------------Test List---------------------------------------------");
 
 		try {
@@ -86,7 +91,7 @@ public class CRUDLabtest {
 			}
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("----------Can't read---------");
+			myLogger.info("----------Can't read---------");
 		}
 	}
 
@@ -103,12 +108,12 @@ public class CRUDLabtest {
 		try {
 			LabtestDao labtest = new LabtestDao(new DatabaseManager());
 			labtest.update(id, name, price);
-			System.out.println("\n-------Value  Updated-------");
+			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("\n-------Can't  Update-------");
+			myLogger.info("\n-------Can't  Update-------");
 		}
 	}
 
@@ -121,11 +126,11 @@ public class CRUDLabtest {
 		try {
 			LabtestDao labtest = new LabtestDao(new DatabaseManager());
 			labtest.delete(Test_id);
-			System.out.println("---------------Deleted successfully-----------------");
+			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("---------------Can't Delete-----------------");
+			myLogger.info("---------------Can't Delete-----------------");
 		}
 	}
 }

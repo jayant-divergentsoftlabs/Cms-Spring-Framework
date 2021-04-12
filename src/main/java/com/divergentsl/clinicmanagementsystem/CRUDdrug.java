@@ -1,18 +1,19 @@
 package com.divergentsl.clinicmanagementsystem;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.DrugDao;
-import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
+
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DrugDto;
-import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
+
 
 /**
  * This class is accessible only by the admin and in this class admin can
@@ -22,14 +23,18 @@ import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
  *
  */
 public class CRUDdrug {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDdrug.java");
+
 	/**
 	 * This method i.e. CRUDdrug is accessible by admin where admin can operate CRUD
 	 * on Drug .
 	 */
 	public static void CRUDdrug() {
 		Scanner sc = new Scanner(System.in);
+		myLogger.setLevel(Level.FINE);
 		while (true) {
-			System.out.println("-------------CRUD Drug Operation-------------");
+			myLogger.info("-------------CRUD Drug Operation-------------");
 			System.out.println("Press:- " + "\n1.Create Drug" + "\n2.See Drug list" + "\n3.Edit Drug"
 					+ "\n4.Delete Drug" + "\n5.EXIT");
 			int input = sc.nextInt();
@@ -78,10 +83,10 @@ public class CRUDdrug {
 		DrugDao drug = new DrugDao(new DatabaseManager());
 		try {
 			drug.create(id, name, quantity, description, price);
-			System.out.println("\n-------Insertion is Successful-------");
+			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("\n--------Unsuccesful ----------");
+			myLogger.info("\n--------Unsuccesful ----------");
 		}
 	}
 
@@ -122,12 +127,13 @@ public class CRUDdrug {
 		try {
 			DrugDao drug = new DrugDao(new DatabaseManager());
 			drug.update(id, name, quantity, description, price);
-			System.out.println("\n-------Value  Updated-------");
+
+			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("\n-------Can't  Update-------");
+			myLogger.info("\n-------Can't  Update-------");
 		}
 	}
 
@@ -140,11 +146,11 @@ public class CRUDdrug {
 		try {
 			DrugDao drug = new DrugDao(new DatabaseManager());
 			drug.delete(Drug_id);
-			System.out.println("---------------Deleted successfully-----------------");
+			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("---------------Can't Delete-----------------");
+			myLogger.info("---------------Can't Delete-----------------");
 		}
 	}
 }

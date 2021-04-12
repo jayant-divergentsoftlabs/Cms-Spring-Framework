@@ -1,6 +1,9 @@
 package com.divergentsl.clinicmanagementsystem;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * In this class we will input from user that he/she want to login through Doctor or Admin.
@@ -10,13 +13,16 @@ import java.util.*;
  */
 
 public class ClinicManagementSystem {
+	static final Logger myLog = Logger.getLogger(
+			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/ClinicManagementSystem.java");
 	public static void main(String[] args) {
 
 		while (true) {
 			AdminLogin admin = new AdminLogin();
 			DoctorLogin doctor = new DoctorLogin();
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter the Login panel");
+		    myLog.setLevel(Level.FINE);
+			myLog.info("Enter the Login panel");
 			System.out.println("1. Admin");
 			System.out.println("2. Doctor");
 			System.out.println("Exit");
@@ -38,13 +44,13 @@ public class ClinicManagementSystem {
 				break;
 			case 3:
 				ClinicManagementSystem.main(null);
-				System.out.println("------------------Exit Successfully-----------------------");
+				myLog.info("------------------Exit Successfully-----------------------");
 			default:
-				System.out.println("Enter valid panel");
+				myLog.info("Enter valid panel");
 			}
-
+		}
 		}
 
-	}
+	
 
 }

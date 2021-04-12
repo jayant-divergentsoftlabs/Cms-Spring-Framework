@@ -4,10 +4,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 
 public class AdminDao {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/AdminDao.java");
+	
+	
 	IDatabaseManager databaseManager;
 
 	public AdminDao(IDatabaseManager databaseManager) {
@@ -16,6 +22,7 @@ public class AdminDao {
 
 	public boolean adminDao(String username, String password) {
 		try {
+			myLogger.setLevel(Level.FINE);
 			Connection con = null;
 			Statement stmt = null;
 			ResultSet rs = null;
@@ -25,11 +32,11 @@ public class AdminDao {
 
 				rs=stmt.executeQuery("select * from admin where A_username ='" + username + "' and A_password ='" + password + "'");
 				if (rs.next()) {
-					System.out.println("Password is correct..!!");
+					myLogger.info("Password is correct..!!");
 					System.out.println("-----Admin Login Successful-----");
 					return true;
 				} else {
-					System.out.println("Try again..!!");
+					myLogger.info("Try again..!!");
 					return false;
 				}
 			}

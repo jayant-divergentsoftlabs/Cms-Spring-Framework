@@ -8,15 +8,17 @@ import java.sql.SQLException;
  *
  */
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
-public class Listpatient {
+public class Listpatient {static final Logger myLogger = Logger
+.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/ListPatient.java");
 
 	public static void listPatient() {
-		System.out.println(
+		myLogger.info(
 				"--------------------------------------Patient List---------------------------------------------");
 
 		try {
@@ -32,7 +34,7 @@ public class Listpatient {
 			}
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("----------Can't read---------");
+			myLogger.info("----------Can't read---------");
 		}
 
 	}

@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
@@ -17,6 +19,8 @@ import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
  *
  */
 public class CRUDpatient {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDpatient.java");
 	static Scanner sc = new Scanner(System.in);
 
 	/**
@@ -24,9 +28,9 @@ public class CRUDpatient {
 	 * Patient.
 	 */
 	public static void CRUDp() {
-
+       myLogger.setLevel(Level.FINE);
 		while (true) {
-			System.out.println("--------CRUD Patient--------");
+			myLogger.info("--------CRUD Patient--------");
 			System.out.println("Press:- " + "\n1.Create Patient" + "\n2.See Patient list" + "\n3.Edit Patient"
 					+ "\n4.Delete Patient" + "\n5.EXIT");
 			int input = sc.nextInt();
@@ -45,10 +49,10 @@ public class CRUDpatient {
 				break;
 			case 5:
 				AdminLogin.adminpanel();
-				System.out.println("------------------Exit Successfully-----------------------");
+				myLogger.info("------------------Exit Successfully-----------------------");
 				break;
 			default:
-				System.out.println("-------------------Enter Valid Input--------------------");
+				myLogger.info("-------------------Enter Valid Input--------------------");
 			}
 		}
 	}
@@ -71,16 +75,16 @@ public class CRUDpatient {
 		PatientDao patient = new PatientDao(new DatabaseManager());
 		try {
 			patient.create(id, name, age, gender, contactnumber, weight);
-			System.out.println("\n-------Insertion is Successful-------");
+			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("\n--------Unsuccesful ----------");
+			myLogger.info("\n--------Unsuccesful ----------");
 		}
 
 	}
 
 	public static void read() {
-		System.out.println(
+		myLogger.info(
 				"--------------------------------------Patient List---------------------------------------------");
 
 		try {
@@ -95,7 +99,7 @@ public class CRUDpatient {
 			}
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("----------Can't read---------");
+			myLogger.info("----------Can't read---------");
 		}
 
 	}
@@ -117,12 +121,12 @@ public class CRUDpatient {
 		try {
 			PatientDao patient = new PatientDao(new DatabaseManager());
 			patient.update(id, name, age, gender, contactnumber, weight);
-			System.out.println("\n-------Value  Updated-------");
+			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("\n-------Can't  Update-------");
+			myLogger.info("\n-------Can't  Update-------");
 		}
 	}
 
@@ -134,11 +138,11 @@ public class CRUDpatient {
 		try {
 			PatientDao patient = new PatientDao(new DatabaseManager());
 			patient.delete(P_Id);
-			System.out.println("---------------Deleted successfully-----------------");
+			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("---------------Can't Delete-----------------");
+			myLogger.info("---------------Can't Delete-----------------");
 		}
 	}
 }

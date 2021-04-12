@@ -1,19 +1,24 @@
 package com.divergentsl.clinicmanagementsystem;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
 
-import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
+
+import java.sql.SQLException;
+
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 import com.divergentsl.clinicmanagementsystem.dao.PrescriptionDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
 public class Prescription {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/Prescription.java");
 
 	public static void prescription() {
+		myLogger.setLevel(Level.FINE);
 		Scanner sc = new Scanner(System.in);
 
 		Connection con;
@@ -34,10 +39,10 @@ public class Prescription {
 			PrescriptionDao prescription = new PrescriptionDao(new DatabaseManager());
 			try {
 				prescription.create(name, mg,quantity,days,test,notes);
-				System.out.println("\n-------Insertion is Successful-------");
+				myLogger.info("\n-------Insertion is Successful-------");
 			} catch (SQLException e) {
 				System.err.println(e);
-				System.out.println("\n--------Unsuccesful ----------");
+				myLogger.info("\n--------Unsuccesful ----------");
 			}
 			
 

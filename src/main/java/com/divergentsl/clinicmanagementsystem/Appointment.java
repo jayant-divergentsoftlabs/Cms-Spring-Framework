@@ -1,17 +1,14 @@
 package com.divergentsl.clinicmanagementsystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
+
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.AppointmentDao;
-import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
+
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
-import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 
 /**
  * \ This class i.e. Appointment will accessed by admin where admin can book
@@ -21,31 +18,37 @@ import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
  *
  */
 public class Appointment {
+	static final Logger myLog = Logger.getLogger(
+			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/Appointment.java");
+
 	/**
 	 * By the help of this method i.e. appointmentList admin can Create appointment
 	 * and can see doctor list.
 	 */
 
 	public static void appointmentList() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("-------------Appointment-------------");
-		System.out.println("Press:- " + "\n1.Create  Appointment" + "\n2.See Doctor list" + "\n3.EXIT");
-		int input = sc.nextInt();
-		switch (input) {
-		case 1:
-			create();
-			System.out.println("----------Appointment Created Successfully----------");
-			break;
-		case 2:
-		CRUDdoctor.read();
-			System.out.println("----------This is a List of Doctors----------");
-			break;
+		try (Scanner sc = new Scanner(System.in)) {
+			myLog.setLevel(Level.FINE);
+			myLog.info("-------------Appointment-------------");
+			System.out.println("Press:- " + "\n1.Create  Appointment" + "\n2.See Doctor list" + "\n3.EXIT");
+			int input = sc.nextInt();
+			switch (input) {
+			case 1:
+				create();
+				System.out.println("----------Appointment Created Successfully----------");
+				break;
+			case 2:
+				CRUDdoctor.read();
+				System.out.println("----------This is a List of Doctors----------");
+				break;
 
+			}
 		}
 	}
+
 	public static void create() {
 		Scanner sc = new Scanner(System.in);
-
+		myLog.setLevel(Level.FINE);
 		System.out.println("Enter Appointment ID");
 		String appointmentId = sc.next();
 		System.out.println("Enter Patient Name");
@@ -61,11 +64,12 @@ public class Appointment {
 
 		AppointmentDao doc = new AppointmentDao(new DatabaseManager());
 		try {
-			doc.create(appointmentId, patientName, drId, problem,appointmentDate,appointmentTime);
-			System.out.println("\n-------Insertion is Successful-------");
+			doc.create(appointmentId, patientName, drId, problem, appointmentDate, appointmentTime);
+			
+			myLog.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("\n--------Unsuccesful ----------");
+			myLog.info("\n--------Unsuccesful ----------");
 		}
 
 	}

@@ -3,6 +3,8 @@ package com.divergentsl.clinicmanagementsystem;
 import java.sql.SQLException;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
@@ -16,6 +18,8 @@ import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
  *
  */
 public class CRUDdoctor {
+	static final Logger myLogger = Logger.getLogger(
+			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDdoctor.java");
 	static Scanner sc = new Scanner(System.in);
 
 	/**
@@ -25,8 +29,8 @@ public class CRUDdoctor {
 	public static void CRUDdr() {
 
 		while (true) {
-
-			System.out.println("----------CRUD Operation for Doctor----------");
+			myLogger.setLevel(Level.FINE);
+			myLogger.info("----------CRUD Operation for Doctor----------");
 			System.out.println("Press:- " + "\n1.Create Doctor" + "\n2.See doctor list" + "\n3.Edit Doctor"
 					+ "\n4.Delete Doctor" + "\n5.EXIT");
 			int input = sc.nextInt();
@@ -51,7 +55,7 @@ public class CRUDdoctor {
 
 				break;
 			default:
-				System.out.println("-------------------Enter Valid Input--------------------");
+				myLogger.info("-------------------Enter Valid Input--------------------");
 				break;
 			}
 		}
@@ -71,17 +75,16 @@ public class CRUDdoctor {
 		DoctorDao doc = new DoctorDao(new DatabaseManager());
 		try {
 			doc.create(id, name, speciality, fee);
-			System.out.println("\n-------Insertion is Successful-------");
+			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("\n--------Unsuccesful ----------");
+			myLogger.info("\n--------Unsuccesful ----------");
 		}
 
 	}
 
 	public static void read() {
-		System.out.println(
-				"--------------------------------------Doctor List---------------------------------------------");
+		myLogger.info("--------------------------------------Doctor List---------------------------------------------");
 
 		try {
 			DoctorDao doa = new DoctorDao(new DatabaseManager());
@@ -89,12 +92,13 @@ public class CRUDdoctor {
 //			System.out.printf("id          name \t        speciality      fee\n");
 
 			for (DoctorDto doctorDto : dtos) {
-				System.out.printf(" %s %30s %15s  %20s ", doctorDto.getId(), doctorDto.getName(),doctorDto.getSpeciality(), doctorDto.getFee());
+				System.out.printf(" %s %30s %15s  %20s ", doctorDto.getId(), doctorDto.getName(),
+						doctorDto.getSpeciality(), doctorDto.getFee());
 				System.out.println("\n");
 			}
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.println("----------Can't read---------");
+			myLogger.info("----------Can't read---------");
 		}
 
 	}
@@ -113,12 +117,12 @@ public class CRUDdoctor {
 		try {
 			DoctorDao doc = new DoctorDao(new DatabaseManager());
 			doc.update(id, name, speciality, fee);
-			System.out.println("\n-------Value  Updated-------");
+			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("\n-------Can't  Update-------");
+			myLogger.info("\n-------Can't  Update-------");
 		}
 	}
 
@@ -129,11 +133,11 @@ public class CRUDdoctor {
 			System.out.println("Enter Doctor ID of doctor you want to Delete");
 			String D_Id = sc.next();
 			doc.delete(D_Id);
-			System.out.println("---------------Deleted successfully-----------------");
+			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("---------------Can't Delete-----------------");
+			myLogger.info("---------------Can't Delete-----------------");
 		}
 	}
 

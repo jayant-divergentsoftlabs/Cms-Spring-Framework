@@ -1,8 +1,10 @@
 package com.divergentsl.clinicmanagementsystem;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
+
 import com.divergentsl.clinicmanagementsystem.dao.DoctorloginDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
@@ -14,6 +16,8 @@ import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager
  *
  */
 public class DoctorLogin {
+	static final Logger myLogger = Logger
+			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/DoctorLogin.java");
 	static Scanner sc = new Scanner(System.in);
 
 	/**
@@ -22,11 +26,11 @@ public class DoctorLogin {
 	 */
 
 	public static boolean doctorMethod() {
-
+		 myLogger.setLevel(Level.FINE);
 		try {
-			System.out.println("-------------------Doctor Panel------------------");
+			myLogger.info("-------------------Doctor Panel------------------");
 
-			System.out.println("\n-----Doctor Login------");
+			myLogger.info("\n-----Doctor Login------");
 			System.out.print("\nEnter Username: ");
 			String username = sc.next();
 
@@ -73,7 +77,7 @@ public class DoctorLogin {
 			break;
 		case 5:
 			CRUDdoctor.CRUDdr();
-			System.out.println("------------------Exit Successfully-----------------------");
+			myLogger.info("------------------Exit Successfully-----------------------");
 			break;
 
 		}
