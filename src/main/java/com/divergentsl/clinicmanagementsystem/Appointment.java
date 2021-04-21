@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.AppointmentDao;
 
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
@@ -20,6 +23,13 @@ import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager
 public class Appointment {
 	static final Logger myLog = Logger.getLogger(
 			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/Appointment.java");
+    private static AppointmentDao dao;
+
+    
+    static {
+    	ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+    	dao = context.getBean("appointmentdao", AppointmentDao.class);
+    }
 
 	/**
 	 * By the help of this method i.e. appointmentList admin can Create appointment
@@ -41,7 +51,8 @@ public class Appointment {
 				CRUDdoctor.read();
 				System.out.println("----------This is a List of Doctors----------");
 				break;
-
+			case 3:
+				ClinicManagementSystem.show();
 			}
 		}
 	}
@@ -62,9 +73,8 @@ public class Appointment {
 		System.out.println("Enter Time of Appointment");
 		String appointmentTime = sc.next().trim();
 
-		AppointmentDao doc = new AppointmentDao(new DatabaseManager());
 		try {
-			doc.create(appointmentId, patientName, drId, problem, appointmentDate, appointmentTime);
+			dao.create(appointmentId, patientName, drId, problem, appointmentDate, appointmentTime);
 			
 			myLog.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {

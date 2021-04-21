@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.AppointmentDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
@@ -19,6 +22,12 @@ import com.divergentsl.clinicmanagementsystem.dto.AppointmentDto;
 public class BookedAppointment {
 	static final Logger myLog = Logger.getLogger(
 			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/BookedAppointment.java");
+       private static AppointmentDao dao;
+      
+	static {
+		ApplicationContext context=new ClassPathXmlApplicationContext("Confi.xml");
+		dao = context.getBean("appointmentdao", AppointmentDao.class);
+	}
 
 	/**
 	 * By this method i.e. bookedAppointment doctor will see the appointment booked
@@ -32,8 +41,7 @@ public class BookedAppointment {
 				"--------------------------------------Appointment List---------------------------------------------");
 
 		try {
-			AppointmentDao appointment = new AppointmentDao(new DatabaseManager());
-			List<AppointmentDto> dtos = appointment.read();
+			List<AppointmentDto> dtos = dao.read();
 			System.out.println("\n");
 			System.out.printf(
 					"Id                              Name               DoctorId                   Problem               DateofAppointment        Time\n");

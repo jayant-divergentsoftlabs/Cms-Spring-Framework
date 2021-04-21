@@ -4,7 +4,10 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
 import com.divergentsl.clinicmanagementsystem.dao.DoctorloginDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 
@@ -19,11 +22,18 @@ public class DoctorLogin {
 	static final Logger myLogger = Logger
 			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/DoctorLogin.java");
 	static Scanner sc = new Scanner(System.in);
-
+      
 	/**
 	 * In this method i.e. DoctorMethod it will check the doctor's username and
 	 * password if it is correct then the user can access doctor's functionalities.
 	 */
+	
+	private static DoctorloginDao doctorLoginDao;
+	
+	static {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+		doctorLoginDao = context.getBean("doctorlogindao", DoctorloginDao.class);
+	}
 
 	public static boolean doctorMethod() {
 		 myLogger.setLevel(Level.FINE);
@@ -36,8 +46,7 @@ public class DoctorLogin {
 
 			System.out.print("\nEnter Password: ");
 			String password = sc.next();
-			DoctorloginDao doctorDao=new DoctorloginDao(new DatabaseManager());
-			return doctorDao.doctorDao(username,password);
+			return doctorLoginDao.doctorDao(username,password);
 		}
 
 		catch (Exception e) {

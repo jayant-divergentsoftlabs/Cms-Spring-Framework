@@ -7,20 +7,29 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.divergentsl.clinicmanagementsystem.BookedAppointment;
+import com.divergentsl.clinicmanagementsystem.CRUDLabtest;
+import com.divergentsl.clinicmanagementsystem.CRUDdoctor;
+import com.divergentsl.clinicmanagementsystem.CRUDdrug;
+import com.divergentsl.clinicmanagementsystem.CRUDpatient;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 
 public class AdminDao {
 	static final Logger myLogger = Logger
 			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/AdminDao.java");
 	
-	
-	IDatabaseManager databaseManager;
+
+	public void setDatabaseManager(IDatabaseManager databaseManager) {
+		this.databaseManager = databaseManager;
+	}
+
+	static IDatabaseManager databaseManager;
 
 	public AdminDao(IDatabaseManager databaseManager) {
 		this.databaseManager = databaseManager;
 	}
 
-	public boolean adminDao(String username, String password) {
+	public static boolean adminDao(String username, String password) {
 		try {
 			myLogger.setLevel(Level.FINE);
 			Connection con = null;
@@ -30,7 +39,8 @@ public class AdminDao {
 			stmt = con.createStatement();
 			if (con != null) {
 
-				rs=stmt.executeQuery("select * from admin where A_username ='" + username + "' and A_password ='" + password + "'");
+				rs = stmt.executeQuery(
+						"select * from admin where A_username ='" + username + "' and A_password ='" + password + "'");
 				if (rs.next()) {
 					myLogger.info("Password is correct..!!");
 					System.out.println("-----Admin Login Successful-----");
@@ -40,12 +50,12 @@ public class AdminDao {
 					return false;
 				}
 			}
-		}
-		catch (SQLException e) {
-			
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 		return false;
 	}
 
+	
 }

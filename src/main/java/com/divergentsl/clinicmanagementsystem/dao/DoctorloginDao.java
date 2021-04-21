@@ -13,23 +13,22 @@ public class DoctorloginDao {
 	static final Logger myLogger = Logger
 			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/AdminDao.java");
 	
-	IDatabaseManager databaseManager;
-
-	public DoctorloginDao(IDatabaseManager databaseManager) {
+	private static IDatabaseManager databaseManager;
+	
+    public DoctorloginDao(IDatabaseManager databaseManager) {
 		this.databaseManager = databaseManager;
 	}
 
-	public boolean doctorDao(String username, String password) {
+	public static boolean doctorDao(String username, String password) {
 		try {
 			myLogger.setLevel(Level.FINE);
 			Connection con = null;
 			Statement stmt = null;
-			ResultSet rs = null;
 			con = databaseManager.getConnection();
 			stmt = con.createStatement();
 			if (con != null) {
 
-				rs=stmt.executeQuery("select *from doctorlogin where D_username ='" + username + "' and D_password ='" + password + "'");
+				ResultSet rs=stmt.executeQuery("select *from doctorlogin where D_username ='" + username + "' and D_password ='" + password + "'");
 				if (rs.next()) {
 					myLogger.info("Password is correct..!!");
 					myLogger.info("-----Doctor Login Successful-----");

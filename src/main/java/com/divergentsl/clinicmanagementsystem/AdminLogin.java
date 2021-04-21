@@ -17,6 +17,9 @@ public class AdminLogin {
 	static final Logger myLogger = Logger.getLogger(
 			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/AdminLogin.java");
 
+	public AdminLogin() {
+	}
+
 	/**
 	 * The adminMethod will check the username and password of the admin and if it
 	 * is correct then it will login successfully otherwise give the another chance
@@ -30,21 +33,18 @@ public class AdminLogin {
 
 		try {
 			myLogger.setLevel(Level.FINE);
-            myLogger.log(Level.INFO, "-------------------Admin Panel------------------");
-			
-//				System.out.println("-------------------Admin Panel------------------");
+			myLogger.log(Level.INFO, "-------------------Admin Panel------------------");
 
-			myLogger.log(Level.FINE,"\n-----Admin Login------");
+			myLogger.log(Level.FINE, "\n-----Admin Login------");
 			System.out.print("\nEnter Username: ");
 			String username = sc.next();
 
 			System.out.print("\nEnter Password: ");
 			String password = sc.next();
-			AdminDao adminDao = new AdminDao(new DatabaseManager());
-			return adminDao.adminDao(username, password);
+			return AdminDao.adminDao(username, password);
 
 		} catch (Exception e) {
-			System.out.print(e);
+			myLogger.info("Exception: " + e);
 		}
 
 		return true;
@@ -55,19 +55,18 @@ public class AdminLogin {
 	 * will give input for specific operation.
 	 */
 	public static int adminpanel() {
-		try (Scanner sc = new Scanner(System.in)) {
+		try{
 			while (true) {
 
 				System.out.println(
 						"Select: " + "\n1.CRUD Doctor" + "\n2.CRUD Patient" + "\n3.CRUD Drugs" + "\n4.CRUD Lab Test"
 								+ "\n5.Book appointment for a patient by selecting Doctor and Date/time" + "\n6.Exit");
-				int a;
-				a = sc.nextInt();
+				
+				Scanner sc = new Scanner(System.in);
+				int a = Integer.parseInt(sc.nextLine());
 				switch (a) {
 				case 1:
-
 					CRUDdoctor.CRUDdr();
-
 					break;
 				case 2:
 					CRUDpatient.CRUDp();
@@ -82,15 +81,18 @@ public class AdminLogin {
 					Appointment.appointmentList();
 					break;
 				case 6:
-					ClinicManagementSystem.main(null);
+					ClinicManagementSystem.show();
 					myLogger.info("------------------Exit Successfully-----------------------");
 					break;
 
 				default:
-					System.out.println("Please Enter valid input");
+					myLogger.info("Please Enter valid input");
 				}
 
 			}
+		} finally {
+			
 		}
+		
 	}
 }

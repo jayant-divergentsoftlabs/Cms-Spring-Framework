@@ -9,11 +9,13 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.DrugDao;
 
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DrugDto;
-
 
 /**
  * This class is accessible only by the admin and in this class admin can
@@ -25,6 +27,17 @@ import com.divergentsl.clinicmanagementsystem.dto.DrugDto;
 public class CRUDdrug {
 	static final Logger myLogger = Logger
 			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDdrug.java");
+	private static DrugDao dao;
+	
+	static {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+		dao = context.getBean("drugdao", DrugDao.class);
+	}
+	
+
+	public static void setDao(DrugDao dao) {
+		CRUDdrug.dao = dao;
+	}
 
 	/**
 	 * This method i.e. CRUDdrug is accessible by admin where admin can operate CRUD
@@ -80,9 +93,9 @@ public class CRUDdrug {
 		String description = sc.next();
 		System.out.println("Enter Drug Price");
 		int price = sc.nextInt();
-		DrugDao drug = new DrugDao(new DatabaseManager());
+
 		try {
-			drug.create(id, name, quantity, description, price);
+			dao.create(id, name, quantity, description, price);
 			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -95,8 +108,8 @@ public class CRUDdrug {
 				"--------------------------------------Drug List---------------------------------------------");
 
 		try {
-			DrugDao drug = new DrugDao(new DatabaseManager());
-			List<DrugDto> dtos = drug.read();
+
+			List<DrugDto> dtos = dao.read();
 			System.out.printf("id          name \t        quantity      description\t  price\n ");
 
 			for (DrugDto drugDto : dtos) {
@@ -125,8 +138,8 @@ public class CRUDdrug {
 		int price = sc.nextInt();
 
 		try {
-			DrugDao drug = new DrugDao(new DatabaseManager());
-			drug.update(id, name, quantity, description, price);
+
+			dao.update(id, name, quantity, description, price);
 
 			myLogger.info("\n-------Value  Updated-------");
 
@@ -144,8 +157,8 @@ public class CRUDdrug {
 		String Drug_id = sc.next();
 
 		try {
-			DrugDao drug = new DrugDao(new DatabaseManager());
-			drug.delete(Drug_id);
+
+			dao.delete(Drug_id);
 			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 

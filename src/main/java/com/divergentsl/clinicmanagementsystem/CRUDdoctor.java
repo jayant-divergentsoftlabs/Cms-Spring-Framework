@@ -6,6 +6,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.DoctorDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
@@ -21,6 +24,14 @@ public class CRUDdoctor {
 	static final Logger myLogger = Logger.getLogger(
 			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDdoctor.java");
 	static Scanner sc = new Scanner(System.in);
+	
+	private static DoctorDao dao;
+
+	static {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+		dao = context.getBean("doctordao", DoctorDao.class);
+	}
+	
 
 	/**
 	 * This method i.e. CRUDdr is accessible by admin where admin can operate CRUD
@@ -72,9 +83,8 @@ public class CRUDdoctor {
 		System.out.println("Enter Doctor Fee");
 		String fee = sc.next();
 
-		DoctorDao doc = new DoctorDao(new DatabaseManager());
 		try {
-			doc.create(id, name, speciality, fee);
+			dao.create(id, name, speciality, fee);
 			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -87,8 +97,8 @@ public class CRUDdoctor {
 		myLogger.info("--------------------------------------Doctor List---------------------------------------------");
 
 		try {
-			DoctorDao doa = new DoctorDao(new DatabaseManager());
-			List<DoctorDto> dtos = doa.read();
+
+			List<DoctorDto> dtos = dao.read();
 //			System.out.printf("id          name \t        speciality      fee\n");
 
 			for (DoctorDto doctorDto : dtos) {
@@ -115,8 +125,8 @@ public class CRUDdoctor {
 		String fee = sc.next();
 
 		try {
-			DoctorDao doc = new DoctorDao(new DatabaseManager());
-			doc.update(id, name, speciality, fee);
+
+			dao.update(id, name, speciality, fee);
 			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
@@ -129,10 +139,10 @@ public class CRUDdoctor {
 	public static void delete() {
 
 		try {
-			DoctorDao doc = new DoctorDao(new DatabaseManager());
+
 			System.out.println("Enter Doctor ID of doctor you want to Delete");
 			String D_Id = sc.next();
-			doc.delete(D_Id);
+			dao.delete(D_Id);
 			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 

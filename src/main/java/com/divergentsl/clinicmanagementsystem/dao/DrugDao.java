@@ -7,7 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 import com.divergentsl.clinicmanagementsystem.dto.DrugDto;
 
 public class DrugDao {
@@ -22,7 +26,8 @@ public class DrugDao {
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		return stmt.executeUpdate("insert into drug values (" + id + ", '" + name + "'," + quantity + ",'" + description+ "'," + price + ")");
+		return stmt.executeUpdate("insert into drug values (" + id + ", '" + name + "'," + quantity + ",'" + description
+				+ "'," + price + ")");
 
 	}
 
@@ -34,14 +39,14 @@ public class DrugDao {
 		ResultSet rs = stmt.executeQuery("select * from drug");
 		List<DrugDto> drugDtos = new ArrayList<>();
 		while (rs.next()) {
-			DrugDto drugDto = new DrugDto();
-			drugDto.setId(rs.getInt(1));
-			drugDto.setName(rs.getString(2));
-			drugDto.setQuantity(rs.getInt(3));
-			drugDto.setDescription(rs.getString(4));
-			drugDto.setPrice(rs.getString(5));
+			DrugDto dto = new DrugDto();
+			dto.setId(rs.getInt(1));
+			dto.setName(rs.getString(2));
+			dto.setQuantity(rs.getInt(3));
+			dto.setDescription(rs.getString(4));
+			dto.setPrice(rs.getString(5));
 
-			drugDtos.add(drugDto);
+			drugDtos.add(dto);
 		}
 		return drugDtos;
 
@@ -52,7 +57,8 @@ public class DrugDao {
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		String updateQuery = "UPDATE drug SET Drug_name ='" + name + "', Drug_quantity='" + quantity + "', Drug_description='" + description + "', Drug_price='" + price + "'WHERE Drug_id='" + id + "'";
+		String updateQuery = "UPDATE drug SET Drug_name ='" + name + "', Drug_quantity='" + quantity
+				+ "', Drug_description='" + description + "', Drug_price='" + price + "'WHERE Drug_id='" + id + "'";
 		System.out.println(updateQuery);
 		return stmt.executeUpdate(updateQuery);
 	}
@@ -66,9 +72,4 @@ public class DrugDao {
 
 	}
 
-	
-
-	
-	}
-
-
+}

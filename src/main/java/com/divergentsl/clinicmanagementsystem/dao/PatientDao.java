@@ -7,7 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
+import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 public class PatientDao {
@@ -23,8 +27,8 @@ public class PatientDao {
 		Statement stmt = null;
 		con = DatabaseManager.getConnection();
 		stmt = con.createStatement();
-		return stmt.executeUpdate("insert into patient values ( '" + id + "' , '" + name + "' , " + age + " , '" + gender
-				+ "' , '" + contactnumber + "' , " + weight + " )");
+		return stmt.executeUpdate("insert into patient values ( '" + id + "' , '" + name + "' , " + age + " , '"
+				+ gender + "' , '" + contactnumber + "' , " + weight + " )");
 
 	}
 
@@ -36,14 +40,15 @@ public class PatientDao {
 		ResultSet rs = stmt.executeQuery("select * from patient");
 		List<PatientDto> patientDtos = new ArrayList<>();
 		while (rs.next()) {
-			PatientDto patientDto = new PatientDto();
-			patientDto.setId(rs.getString(1));
-			patientDto.setName(rs.getString(2));
-			patientDto.setAge(rs.getInt(3));
-			patientDto.setGender(rs.getCharacterStream(4));
-			patientDto.setContactnumber(rs.getString(5));
-			patientDto.setWeight(rs.getInt(6));
-			patientDtos.add(patientDto);
+			
+			PatientDto dto = new PatientDto();
+			dto.setId(rs.getString(1));
+			dto.setName(rs.getString(2));
+			dto.setAge(rs.getInt(3));
+			dto.setGender(rs.getCharacterStream(4));
+			dto.setContactnumber(rs.getString(5));
+			dto.setWeight(rs.getInt(6));
+			patientDtos.add(dto);
 		}
 		return patientDtos;
 

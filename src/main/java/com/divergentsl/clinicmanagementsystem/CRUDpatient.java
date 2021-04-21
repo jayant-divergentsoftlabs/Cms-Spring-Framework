@@ -7,8 +7,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.PatientDao;
-import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
 
 /**
@@ -19,16 +23,30 @@ import com.divergentsl.clinicmanagementsystem.dto.PatientDto;
  *
  */
 public class CRUDpatient {
-	static final Logger myLogger = Logger
-			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDpatient.java");
+	static final Logger myLogger = Logger.getLogger(
+			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDpatient.java");
 	static Scanner sc = new Scanner(System.in);
+	
+	
+	private static PatientDao dao;
 
+	static {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+		dao = context.getBean("patientdao", PatientDao.class);
+		
+	}
+	
+	public static void setDao(PatientDao dao) {
+		CRUDpatient.dao = dao;
+	}
+
+	
 	/**
 	 * This method i.e. CRUDp is accessible by admin where admin can operate CRUD on
 	 * Patient.
 	 */
 	public static void CRUDp() {
-       myLogger.setLevel(Level.FINE);
+		myLogger.setLevel(Level.FINE);
 		while (true) {
 			myLogger.info("--------CRUD Patient--------");
 			System.out.println("Press:- " + "\n1.Create Patient" + "\n2.See Patient list" + "\n3.Edit Patient"
@@ -72,9 +90,8 @@ public class CRUDpatient {
 		System.out.println("Enter patient Weight");
 		int weight = sc.nextInt();
 
-		PatientDao patient = new PatientDao(new DatabaseManager());
 		try {
-			patient.create(id, name, age, gender, contactnumber, weight);
+			dao.create(id, name, age, gender, contactnumber, weight);
 			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -88,13 +105,13 @@ public class CRUDpatient {
 				"--------------------------------------Patient List---------------------------------------------");
 
 		try {
-			PatientDao patient = new PatientDao(new DatabaseManager());
-			List<PatientDto> dtos = patient.read();
+			List<PatientDto> dtos = dao.read();
 			System.out.printf("id          name \t        age      gender\t  contactnumber\t  weight\n");
 
 			for (PatientDto patientDto : dtos) {
-				System.out.printf(" %s %30s %15s  %20s %20s %20d ", patientDto.getId(), patientDto.getName(), patientDto.getAge(),
-						patientDto.getGender(), patientDto.getContactnumber(), patientDto.getWeight());
+				System.out.printf(" %s %30s %15s  %20s %20s %20d ", patientDto.getId(), patientDto.getName(),
+						patientDto.getAge(), patientDto.getGender(), patientDto.getContactnumber(),
+						patientDto.getWeight());
 				System.out.println("\n");
 			}
 		} catch (SQLException e) {
@@ -119,8 +136,7 @@ public class CRUDpatient {
 		System.out.println("Enter a Weight you want to update");
 		int weight = sc.nextInt();
 		try {
-			PatientDao patient = new PatientDao(new DatabaseManager());
-			patient.update(id, name, age, gender, contactnumber, weight);
+			dao.update(id, name, age, gender, contactnumber, weight);
 			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
@@ -136,8 +152,7 @@ public class CRUDpatient {
 		String P_Id = sc.next();
 
 		try {
-			PatientDao patient = new PatientDao(new DatabaseManager());
-			patient.delete(P_Id);
+			dao.delete(P_Id);
 			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 

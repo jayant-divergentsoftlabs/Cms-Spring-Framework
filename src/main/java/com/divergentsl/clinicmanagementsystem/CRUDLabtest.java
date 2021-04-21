@@ -5,6 +5,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.dao.LabtestDao;
 import com.divergentsl.clinicmanagementsystem.databaseconnection.DatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.LabtestDto;
@@ -17,8 +20,15 @@ import com.divergentsl.clinicmanagementsystem.dto.LabtestDto;
  *
  */
 public class CRUDLabtest {
-	static final Logger myLogger = Logger
-			.getLogger("Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDLabTest.java");
+	static final Logger myLogger = Logger.getLogger(
+			"Clinic-Management-Systemm/src/main/java/com/divergentsl/clinicmanagementsystem/CRUDLabTest.java");
+	private static LabtestDao dao;
+
+	static {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Confi.xml");
+		dao = context.getBean("labtestdao", LabtestDao.class);
+	}
+
 	/**
 	 * This method i.e. CRUDtest is accessible by admin where admin can operate CRUD
 	 * on test which are in Lab.
@@ -37,15 +47,15 @@ public class CRUDLabtest {
 				break;
 			case 2:
 				read();
-				
+
 				break;
 			case 3:
 				update();
-				
+
 				break;
 			case 4:
 				delete();
-				
+
 				break;
 			case 5:
 				AdminLogin.adminpanel();
@@ -65,9 +75,8 @@ public class CRUDLabtest {
 		String name = sc.next().trim();
 		System.out.println("Enter Test Price");
 		int price = sc.nextInt();
-		LabtestDao labtest = new LabtestDao(new DatabaseManager());
 		try {
-			labtest.create(id, name, price);
+			dao.create(id, name, price);
 			myLogger.info("\n-------Insertion is Successful-------");
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -76,16 +85,14 @@ public class CRUDLabtest {
 	}
 
 	public static void read() {
-		myLogger.info(
-				"--------------------------------------Test List---------------------------------------------");
+		myLogger.info("--------------------------------------Test List---------------------------------------------");
 
 		try {
-			LabtestDao labtest = new LabtestDao(new DatabaseManager());
-			List<LabtestDto> dtos = labtest.read();
-			//System.out.printf("%s %20s %20s",id,name,price\n);
+			List<LabtestDto> dtos = dao.read();
+			// System.out.printf("%s %20s %20s",id,name,price\n);
 
 			for (LabtestDto labDto : dtos) {
-				
+
 				System.out.printf("%s %20s %20s ", labDto.getId(), labDto.getName(), labDto.getPrice());
 				System.out.println("\n");
 			}
@@ -96,7 +103,7 @@ public class CRUDLabtest {
 	}
 
 	public static void update() {
-		Scanner sc = new Scanner(System.in); 
+		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter Test ID of test  you want to edit");
 		int id = sc.nextInt();
@@ -106,8 +113,7 @@ public class CRUDLabtest {
 		int price = sc.nextInt();
 
 		try {
-			LabtestDao labtest = new LabtestDao(new DatabaseManager());
-			labtest.update(id, name, price);
+			dao.update(id, name, price);
 			myLogger.info("\n-------Value  Updated-------");
 
 		} catch (SQLException e) {
@@ -124,8 +130,7 @@ public class CRUDLabtest {
 		String Test_id = sc.next();
 
 		try {
-			LabtestDao labtest = new LabtestDao(new DatabaseManager());
-			labtest.delete(Test_id);
+			dao.delete(Test_id);
 			myLogger.info("---------------Deleted successfully-----------------");
 		} catch (SQLException e) {
 

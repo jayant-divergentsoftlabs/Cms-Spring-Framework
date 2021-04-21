@@ -7,11 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import com.divergentsl.clinicmanagementsystem.databaseconnection.IDatabaseManager;
 import com.divergentsl.clinicmanagementsystem.dto.DoctorDto;
 
 public class DoctorDao {
-	IDatabaseManager DatabaseManager;
+	private IDatabaseManager DatabaseManager;
 
 	public DoctorDao(IDatabaseManager Databasemanager) {
 		this.DatabaseManager = Databasemanager;
@@ -35,12 +38,12 @@ public class DoctorDao {
 		ResultSet rs = stmt.executeQuery("select * from doctor");
 		List<DoctorDto> doctorDtos = new ArrayList<>();
 		while (rs.next()) {
-			DoctorDto doctorDto = new DoctorDto();
-			doctorDto.setId(rs.getString(1));
-			doctorDto.setName(rs.getString(2));
-			doctorDto.setSpeciality(rs.getString(3));
-			doctorDto.setFee(rs.getString(4));
-			doctorDtos.add(doctorDto);
+			DoctorDto dto = new DoctorDto();
+			dto.setId(rs.getString(1));
+			dto.setName(rs.getString(2));
+			dto.setSpeciality(rs.getString(3));
+			dto.setFee(rs.getString(4));
+			doctorDtos.add(dto);
 		}
 		return doctorDtos;
 
